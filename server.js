@@ -13,11 +13,15 @@ MongoClient.connect('mongodb://brendan:greentea@ds143559.mlab.com:43559/crudapp'
   })
 })
 
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-})
+  db.collection('quotes').find().toArray(function(err, results) {
+  console.log(results);
+  // send HTML file populated with quotes here
+  })
+});
 
 app.post('/quotes', (req, res) => {
   db.collection('quotes').save(req.body, (err, result) => {
