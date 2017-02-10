@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.get('/', (req, res) => {
   db.collection('quotes').find().toArray(function(err, results) {
   // send HTML file populated with quotes here
+  //test test
   res.render('index.ejs', {quotes: results})
   })
 });
