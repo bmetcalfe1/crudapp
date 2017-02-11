@@ -1,17 +1,19 @@
 const express = require('express');
 const app = express();
 const bodyParser= require('body-parser')
-const MongoClient = require('mongodb').MongoClient
+const MongoClient = require('mongodb').MongoClient;
 
 var db;
 
 MongoClient.connect('mongodb://brendan:greentea@ds143559.mlab.com:43559/crudapp', (err, database) => {
-  if (err) return console.log(err)
-  db = database
+  if (err) {
+    return console.log(err);
+  }
+  db = database;
   app.listen(3000, () => {
-    console.log('listening on 3000')
+    console.log('listening on 3000');
   })
-})
+});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -46,14 +48,18 @@ app.put('/quotes', (req, res) => {
     sort: {_id: -1},
     upsert: true
   }, (err, result) => {
-    if (err) return res.send(err)
-    res.send(result)
+    if (err) {
+      return res.send(err);
+    }
+    res.send(result);
   })
 });
 
 app.delete('/quotes', (req, res) => {
   db.collection('quotes').findOneAndDelete({name: req.body.name}, (err, result) => {
-    if (err) return res.send(500, err)
-    res.send('A darth vadar quote got deleted')
+    if (err) {
+      return res.send(500, err);
+    }
+    res.send('A darth vadar quote got deleted');
   })
 });
